@@ -89,3 +89,25 @@ class HomeViewTest(TestCase):
 
         self.assertQuerysetEqual(response.context['books'], [],
                                  ordered=False)
+
+    def test_user_can_search_by_book_and_category(self):
+        # Search by full book name and exact category name
+        data = {'qname': 'book4', 'qcategory': 'category3'}
+        response = self.client.get(reverse('books:home'), data)
+
+        self.assertQuerysetEqual(response.context['books'],
+                                 ['<Book: book4>'], ordered=False)
+
+        # Search by book name keyword and exact category name
+        data = {'qname': 'ok4', 'qcategory': 'category3'}
+        response = self.client.get(reverse('books:home'), data)
+
+        self.assertQuerysetEqual(response.context['books'],
+                                 ['<Book: book4>'], ordered=False)
+
+        # Search by book name and category name keyword
+        data = {'qname': 'book4', 'qcategory': 'categ'}
+        response = self.client.get(reverse('books:home'), data)
+
+        self.assertQuerysetEqual(response.context['books'], [],
+                                 ordered=False)

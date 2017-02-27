@@ -11,10 +11,17 @@ class HomeView(View):
         book_name_keyword = request.GET.get('qname')
         category_keyword = request.GET.get('qcategory')
 
-        if book_name_keyword:
+        if book_name_keyword and category_keyword:
+            books = Book.objects.filter(
+                title__icontains=book_name_keyword,
+                category__name__iexact=category_keyword
+            )
+        elif book_name_keyword:
             books = Book.objects.filter(title__icontains=book_name_keyword)
         elif category_keyword:
-            books = Book.objects.filter(category__name__iexact=category_keyword)
+            books = Book.objects.filter(
+                category__name__iexact=category_keyword
+            )
         else:
             books = Book.objects.all()
 
