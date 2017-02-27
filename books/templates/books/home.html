@@ -3,9 +3,19 @@
 {% block content %}
     <ul>
         {% for category in categories %}
-            <li>{{category}}</li>
+            <li>{{ category }}</li>
         {% empty %}
-            <p>No category found</p>
+            <p>No category found.</p>
+        {% endfor %}
+    </ul>
+    <ul>
+        {% for book in books %}
+            <li>{{ book.title }}</li>
+            <li>{{ book.description }}</li>
+            <li>{{ book.author }}</li>
+            <li>{{ book.category.name }}</li>
+        {% empty %}
+            <p>No book found.</p>
         {% endfor %}
     </ul>
 {% endblock content %}
