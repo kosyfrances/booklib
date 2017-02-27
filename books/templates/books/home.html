@@ -3,25 +3,54 @@
 {% block content %}
     <form method="get" action="{% url 'books:home' %}">
         {% csrf_token %}
-        <input type="text" placeholder="Search books by name" name="qname">
-        <input type="text" placeholder="Search books by category" name="qcategory">
-        <input type="submit" name="submit">
+        <div class="row">
+            <div class="col s5">
+                <input type="text" placeholder="Search books by name" name="qname">
+            </div>
+            <div class="col s5">
+                <input type="text" placeholder="Search books by category" name="qcategory">
+            </div>
+            <div class="col s2">
+                <input type="submit" name="submit">
+            </div>
+        </div>
     </form>
-    <ul>
-        {% for category in categories %}
-            <li>{{ category.name }}</li>
-        {% empty %}
-            <p>No category found.</p>
-        {% endfor %}
-    </ul>
-    <ul>
-        {% for book in books %}
-            <li>{{ book.title }}</li>
-            <li>{{ book.description }}</li>
-            <li>{{ book.author }}</li>
-            <li>{{ book.category.name }}</li>
-        {% empty %}
-            <p>No book found.</p>
-        {% endfor %}
-    </ul>
+    <div class="row">
+        <div class="col s3">
+            <ul>
+                {% for category in categories %}
+                    <li><div class="chip">
+                        {{ category.name }}
+                    </div></li>
+                {% empty %}
+                    <li><div class="chip">
+                        No category found.
+                    </div></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col s9">
+            <ul>
+                {% for book in books %}
+                    <div class="col s12">
+                        <div class="card horizontal">
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <h2>{{ book.title }}</h2>
+                                    {% if book.description %}<p>{{ book.description }}</p>{% endif %}
+                                    <span>{{ book.author }}</span>
+                                </div>
+                                <div class="card-action">
+                                <div class="chip">{{ book.category.name }}</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                {% empty %}
+                    <p>No books found.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 {% endblock content %}
