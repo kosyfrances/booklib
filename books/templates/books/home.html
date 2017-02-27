@@ -4,6 +4,8 @@
     <form method="get" action="{% url 'books:home' %}">
         {% csrf_token %}
         <input type="text" placeholder="Search books by name" name="qname">
+        <input type="text" placeholder="Search books by category" name="qcategory">
+        <input type="submit" name="submit">
     </form>
     <ul>
         {% for category in categories %}

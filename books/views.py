@@ -9,9 +9,12 @@ class HomeView(View):
         categories = Category.objects.all()
 
         book_name_keyword = request.GET.get('qname')
+        category_keyword = request.GET.get('qcategory')
 
         if book_name_keyword:
             books = Book.objects.filter(title__icontains=book_name_keyword)
+        elif category_keyword:
+            books = Book.objects.filter(category__name__iexact=category_keyword)
         else:
             books = Book.objects.all()
 
