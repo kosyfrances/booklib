@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>It works</h1>
+    <ul>
+        {% for category in categories %}
+            <li>{{category}}</li>
+        {% empty %}
+            <p>No category found</p>
+        {% endfor %}
+    </ul>
 {% endblock content %}
