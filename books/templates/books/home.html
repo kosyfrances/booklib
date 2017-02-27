@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <form method="get" action="{% url 'books:home' %}">
+        {% csrf_token %}
+        <input type="text" placeholder="Search books by name" name="qname">
+    </form>
     <ul>
         {% for category in categories %}
             <li>{{ category }}</li>

@@ -7,7 +7,13 @@ from .models import Category, Book
 class HomeView(View):
     def get(self, request):
         categories = Category.objects.all()
-        books = Book.objects.all()
+
+        book_name_keyword = request.GET.get('qname')
+
+        if book_name_keyword:
+            books = Book.objects.filter(title__icontains=book_name_keyword)
+        else:
+            books = Book.objects.all()
 
         context = {
             'categories': categories,

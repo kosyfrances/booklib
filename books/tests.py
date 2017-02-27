@@ -45,3 +45,26 @@ class HomeViewTest(TestCase):
              '<Book: book4>'], ordered=False
         )
         self.assertContains(response, 'book1')
+
+    def test_user_can_search_books_by_name(self):
+        # Search by full book name
+        data = {'qname': 'book1'}
+        response = self.client.get(reverse('books:home'), data)
+
+        self.assertQuerysetEqual(response.context['books'],
+                                 ['<Book: book1>'], ordered=False)
+
+        # Search by keyword from bookname
+        data = {'qname': 'ok1'}
+        response = self.client.get(reverse('books:home'), data)
+
+        self.assertQuerysetEqual(response.context['books'],
+                                 ['<Book: book1>'], ordered=False)
+
+        # Search with non-existent bookname
+        data = {'qname': 'blablabla'}
+        response = self.client.get(reverse('books:home'), data)
+
+        self.assertQuerysetEqual(response.context['books'], [],
+                                 ordered=False)
+
