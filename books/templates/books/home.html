@@ -9,7 +9,7 @@
     </form>
     <ul>
         {% for category in categories %}
-            <li>{{ category }}</li>
+            <li>{{ category.name }}</li>
         {% empty %}
             <p>No category found.</p>
         {% endfor %}
